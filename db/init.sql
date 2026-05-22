@@ -1,5 +1,6 @@
 USE estoque_db;
 
+
 CREATE TABLE IF NOT EXISTS users (
     id            INT AUTO_INCREMENT PRIMARY KEY,
     username      VARCHAR(50)  NOT NULL UNIQUE,
@@ -28,8 +29,8 @@ INSERT INTO users (
     sexo, dtaNascimento, email, telefone, funcao,
     cep, endereco, numero, bairro, cidade, estado, complemento
 ) VALUES (
-    'admin', '1234', 'Admin', 'Sistema', '0001', '000.000.000-00',
-    'Masculino', '1990-01-01', 'admin@email.com', '71999999999', 'Administrador',
+    'admin', '$2a$10$htQv/2ebpKfJiG0eYwbB/erAwhcsjkR/oStjPhwR.QQOyWqC3uUmK', 'Admin', 'Sistema', '0001', '000.000.000-00',
+    'Masculino', '1990-01-01', 'admin@email.com', '71999999999', 'ADMIN',
     '40000-000', 'Rua Exemplo', '123', 'Centro', 'Salvador', 'BA', 'N/A'
 );
 
