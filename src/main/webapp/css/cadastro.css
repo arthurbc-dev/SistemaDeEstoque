@@ -76,7 +76,7 @@ input:focus,select:focus{
 }
 .btn button{
     padding:12px 30px;
-    background-color: var(--sucess);
+    background-color: var(--success);
     color: var(--white);
     border: none;
     border-radius: 8px;
@@ -84,8 +84,8 @@ input:focus,select:focus{
     cursor: pointer;
     transition:0.2s;
 }
-.btn button:hover{
-    backgroud-color: var( --success-hover);
-}
 
+.btn button:hover{
+    background-color: var(--success-hover);
+}
  

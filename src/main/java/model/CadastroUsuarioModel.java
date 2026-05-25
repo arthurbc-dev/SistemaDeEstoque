@@ -56,7 +56,7 @@ public class CadastroUsuarioModel {
     public void setComplemento(String complemento) { this.complemento = complemento; }
 
     public String getNomeUsuario() { return this.nomeUsuario; }
-    public void setNomeusuario(String nomeUsuario) { this.nomeUsuario = nomeUsuario; }
+    public void setNomeUsuario(String nomeUsuario) { this.nomeUsuario = nomeUsuario; }
 
     public String getSenha() { return this.senha; }
     public void setSenha(String senha) { this.senha = senha; }

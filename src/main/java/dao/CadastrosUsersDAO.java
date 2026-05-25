@@ -13,9 +13,8 @@ public class CadastrosUsersDAO {
 "(username, psw, nameFirst, sobrenome, matricula, cpf, sexo, dtaNascimento, email, telefone, funcao, cep, endereco, numero, bairro, cidade, estado, complemento) " +
 "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
-        try (var con = ConnectionFactory.getConnection()) {
-
-               PreparedStatement stmt = con.prepareStatement(sql);
+        try (var con = ConnectionFactory.getConnection();
+               PreparedStatement stmt = con.prepareStatement(sql)){
 
             stmt.setString(1, user.getNomeUsuario());
             stmt.setString(2, SenhaUtil.gerarHash(user.getSenha()));

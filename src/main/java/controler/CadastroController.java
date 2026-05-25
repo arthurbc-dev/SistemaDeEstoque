@@ -18,7 +18,7 @@ public class CadastroController extends HttpServlet {
 
         CadastroUsuarioModel user = new CadastroUsuarioModel();
 
-        // CORRIGIDO: cada campo usa o setter correto (antes todos chamavam setNome)
+
         user.setNome(request.getParameter("namefirst"));
         user.setSobrenome(request.getParameter("sobrenome"));
         user.setMatricula(request.getParameter("matricula"));
@@ -27,7 +27,7 @@ public class CadastroController extends HttpServlet {
         user.setDtaNascimento(request.getParameter("dtaNascimento"));
         user.setEmail(request.getParameter("email"));
         user.setTelefone(request.getParameter("telefone"));
-        user.setNomeusuario(request.getParameter("usuario"));
+        user.setNomeUsuario(request.getParameter("usuario"));
         user.setSenha(request.getParameter("senha"));
         user.setFuncao(request.getParameter("funcao"));
         user.setCep(request.getParameter("cep"));
