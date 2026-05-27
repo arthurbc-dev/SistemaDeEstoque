@@ -1,19 +1,25 @@
 :root {
-    /* Cores principais */
-    --primary-dark: #0f4c75;
-    --primary-medium: #3282b8;
-    --primary-light: #bbe1fa;
 
-    /* Cor de ação (botões / confirmação) */
-    --success: #1b9c85;
-    --success-hover: #157a6e;
+    /* Primárias */
+    --primary-dark: #111827;
+    --primary-medium: #2563eb;
 
-    /* Neutros */
-    --white: #ffffff;
-    --gray-light: #f5f5f5;
-    --gray-medium: #cccccc;
-    --gray-dark: #333333;
+    /* Tons neutros */
+    --gray-light: #0f172a;
+    --gray-medium: #94a3b8;
+    --gray-dark: #e2e8f0;
 
-    /* Sombra */
-    --shadow-default: #333333;
+    /* Branco */
+    --white: #1e293b;
+
+    /* Sombras */
+    --shadow-default: rgba(0, 0, 0, 0.35);
+
+    /* Extras */
+    --card-bg: #1e293b;
+    --hover-bg: #334155;
+    --border-color: #334155;
+      /* Sucesso */
+    --success: #22c55e;
+    --success-hover: #16a34a;
 }

@@ -1,155 +1,427 @@
 body {
     background-color: var(--gray-light);
     color: var(--gray-dark);
-    padding: 20px;
+
+    font-family: Arial, sans-serif;
+
+    margin: 0;
 }
 
+
+/* HEADER */
+
 #header {
-    text-align: center;
+    background-color: var(--primary-dark);
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    padding: 0 24px;
+
+    height: 60px;
+
+    margin-bottom: 24px;
+
+    box-shadow: 0 2px 10px var(--shadow-default);
 }
 
 #tituloDashboard {
-    font-size: 20px;
-    color: var(--primary-dark);
-    margin-bottom: 10px;
+    font-size: 18px;
+
+    font-weight: 600;
+
+    color: #ffffff;
+
+    letter-spacing: 0.3px;
 }
+
+
+/* NAV */
+
+#header nav ul {
+    display: flex;
+
+    list-style: none;
+
+    gap: 8px;
+
+    align-items: center;
+
+    margin: 0;
+
+    padding: 0;
+}
+
+#header nav ul li a {
+    color: rgba(255, 255, 255, 0.85);
+
+    text-decoration: none;
+
+    padding: 8px 14px;
+
+    border-radius: 8px;
+
+    font-size: 14px;
+
+    transition: 0.2s;
+}
+
+#header nav ul li a:hover {
+    background: rgba(255, 255, 255, 0.08);
+
+    color: #ffffff;
+}
+
+#header nav ul li a.btn-menu {
+    background: var(--primary-medium);
+
+    color: #ffffff;
+
+    font-weight: 600;
+}
+
+
+/* MAIN */
+
+main {
+    padding: 0 24px 24px;
+}
+
+
+/* RESUMO */
 
 #resumoEstoque {
     display: flex;
-    justify-content: space-between;
-    margin-bottom: 30px;
-    gap: 20px;
+
+    gap: 16px;
+
+    margin-bottom: 24px;
 }
 
 .card-resumo {
-    background-color: var(--white);
-    box-shadow: 0 4px 6px var(--shadow-default);
-    border-radius: 10px;
+    background-color: var(--card-bg);
+
+    border-radius: 14px;
+
     flex: 1;
-    padding: 20px;
-    text-align: center;
-    transition: transform 0.2s;
+
+    padding: 22px;
+
+    border: 1px solid var(--border-color);
+
+    box-shadow: 0 4px 12px var(--shadow-default);
+
+    transition: 0.2s;
 }
 
 .card-resumo:hover {
-    transform: translateY(-5px);
+    transform: translateY(-3px);
 }
 
 .titulo-card {
-    font-size: 20px;
-    margin-bottom: 10px;
-    color: var(--primary-medium);
+    font-size: 12px;
+
+    text-transform: uppercase;
+
+    letter-spacing: 1px;
+
+    color: var(--gray-medium);
+
+    margin-bottom: 8px;
+
+    font-weight: 600;
 }
 
 .valor-card {
-    font-size: 15px;
-    font-weight: bold;
-    color: var(--primary-dark);
+    font-size: 30px;
+
+    font-weight: 700;
+
+    color: #ffffff;
 }
+
+
+/* FILTRO */
 
 #filtro {
     display: flex;
+
     flex-wrap: wrap;
-    gap: 15px;
+
+    gap: 14px;
+
+    align-items: flex-end;
+
     margin-bottom: 20px;
-    justify-content: center;
-    align-items: center;
+
+    background: var(--card-bg);
+
+    padding: 18px;
+
+    border-radius: 14px;
+
+    border: 1px solid var(--border-color);
+
+    box-shadow: 0 4px 12px var(--shadow-default);
 }
 
-.grupo-filtro {
+#filtro .grupo-filtro {
     display: flex;
+
     flex-direction: column;
+
+    gap: 5px;
 }
 
-.input-filtro,
-.select-filtro {
-    padding: 8px 10px;
-    border-radius: 5px;
-    border: 1px solid var(--gray-medium);
+#filtro label {
+    font-size: 12px;
+
+    font-weight: 600;
+
+    color: var(--gray-medium);
+
+    text-transform: uppercase;
+
+    letter-spacing: 0.5px;
+}
+
+
+/* INPUTS */
+
+#filtro .input-filtro,
+#filtro .select-filtro {
+    width: 220px;
+
+    padding: 10px 12px;
+
+    border-radius: 10px;
+
+    border: 1px solid rgba(255, 255, 255, 0.08);
+
+    background: rgba(255, 255, 255, 0.04);
+
+    color: #ffffff;
+
     outline: none;
+
+    font-size: 13px;
+
+    transition: 0.2s;
 }
 
-.input-filtro:focus,
-.select-filtro:focus {
-    border-color: var(--primary-medium); 
+#filtro .input-filtro:focus,
+#filtro .select-filtro:focus {
+    border-color: var(--primary-medium);
+
+    box-shadow:
+        0 0 0 3px rgba(37, 99, 235, 0.15);
 }
 
-.botao-pesquisa
+.pesquisar-nome .input-filtro {
+    width: 280px;
+}
+
+
+/* BOTÃO */
+
 .btn-pesquisa {
-    margin-top: 0;
     padding: 10px 20px;
+
     background-color: var(--primary-medium);
-    color: var(--white);
+
+    color: #ffffff;
+
     border: none;
-    border-radius: 100px;
+
+    border-radius: 10px;
+
     cursor: pointer;
-    transition: background-color 0.2s;
+
+    font-size: 13px;
+
+    font-weight: 600;
+
+    transition: 0.2s;
 }
 
-.botao-pesquisa
 .btn-pesquisa:hover {
-    background-color: var(--primary-dark);
+    filter: brightness(1.08);
 }
+
+
+/* TABELA */
 
 .tabela-wrapper {
+    background: var(--card-bg);
+
+    border-radius: 14px;
+
+    overflow-x: auto;
+
+    border: 1px solid var(--border-color);
+
+    box-shadow: 0 4px 12px var(--shadow-default);
+}
+
+#tabelaEstoque {
     width: 100%;
+
     border-collapse: collapse;
-    background-color: var(--white);
-    box-shadow: 0 4px 6px var(--shadow-default);
-    border-radius: 5px;
-    overflow: hidden;
 }
 
 #tabelaEstoque th,
 #tabelaEstoque td {
-    padding: 8px 15px;
+    padding: 12px 14px;
+
     text-align: center;
-    border-bottom: 1px solid var(--primary-dark);
+
+    border-bottom: 1px solid var(--border-color);
+
+    font-size: 13px;
 }
 
 #tabelaEstoque th {
     background-color: var(--primary-medium);
-    color: var(--white);
-    font-weight: bold;
+
+    color: #ffffff;
+
+    font-size: 12px;
+
+    text-transform: uppercase;
+
+    letter-spacing: 0.5px;
+
+    white-space: nowrap;
 }
 
-#tabelaEstoque tr:nth-child(even) {
-    background-color: var(--gray-light);
+#tabelaEstoque td {
+    color: #e2e8f0;
+}
+
+#tabelaEstoque tr:nth-child(even) td {
+    background-color: #162033;
+}
+
+#tabelaEstoque tbody tr:hover td {
+    background-color: var(--hover-bg);
+}
+
+
+/* PAGINAÇÃO */
+
+footer {
+    margin-top: 18px;
 }
 
 #paginacao {
-    margin-top: 20px;
     display: flex;
+
     justify-content: center;
+
     align-items: center;
-    gap: 10px;
+
+    gap: 12px;
 }
 
-.controle-paginacao label {
-    font-size: 15px;
-    color: var(--primary-dark);
+.controle-paginacao {
+    display: flex;
+
+    align-items: center;
+
+    gap: 8px;
+}
+
+#paginacao label {
+    font-size: 13px;
+
+    color: var(--gray-dark);
+
+    font-weight: 500;
 }
 
 #pagina {
-    border: 1px solid var(--primary-medium);
-    border-radius: 5px;
+    padding: 8px 10px;
+
+    border-radius: 8px;
+
+    border: 1px solid var(--border-color);
+
+    background: rgba(255, 255, 255, 0.04);
+
+    color: #ffffff;
 }
 
-.conteiner-btn
+.conteiner-btn {
+    display: flex;
+
+    gap: 8px;
+}
+
 #btnVoltar,
-#btnProximo{
-    margin-top: 0;
-    padding: 5px 10px;
+#btnProximo {
+    padding: 8px 16px;
+
     background-color: var(--primary-medium);
-    color: var(--white);
+
+    color: #ffffff;
+
     border: none;
-    border-radius: 10px;
+
+    border-radius: 8px;
+
     cursor: pointer;
-    transition: background-color 0.2s;
+
+    font-size: 13px;
+
+    font-weight: 600;
+
+    transition: 0.2s;
 }
 
-.conteiner-btn
-#btnVoltar
+#btnVoltar:hover,
 #btnProximo:hover {
-    background-color: var(--primary-dark);
+    filter: brightness(1.08);
+}
+
+
+/* RESPONSIVO */
+
+@media (max-width: 768px) {
+
+    #header {
+        flex-direction: column;
+
+        height: auto;
+
+        padding: 16px;
+
+        gap: 12px;
+    }
+
+    #resumoEstoque {
+        flex-direction: column;
+    }
+
+    #filtro {
+        flex-direction: column;
+
+        align-items: stretch;
+    }
+
+    #filtro .input-filtro,
+    #filtro .select-filtro,
+    .pesquisar-nome .input-filtro {
+        width: 100%;
+    }
+
+    .btn-pesquisa {
+        width: 100%;
+    }
+
+    #paginacao {
+        flex-direction: column;
+    }
 }
