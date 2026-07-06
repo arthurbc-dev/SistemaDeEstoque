@@ -20,8 +20,9 @@ import model.CadastroProdutoModel;
 @WebServlet("/cadastroProdutos")
 public class    CadastroProdutosController extends HttpServlet{
 
-    public void doPost(HttpServletRequest request,HttpServletResponse response )
-        throws ServletException,IOException{
+    public void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+
         CadastroProdutoModel produto = new CadastroProdutoModel();
         produto.setCodigoBarras(request.getParameter("codigoBarras"));
         produto.setNomeProduto(request.getParameter("nomeProduto"));
@@ -33,13 +34,21 @@ public class    CadastroProdutosController extends HttpServlet{
         produto.setValor(request.getParameter("valor"));
         produto.setTotal(request.getParameter("total"));
         produto.setStatus(request.getParameter("status"));
-        
-         CadastroProdutoDAO dao = new  CadastroProdutoDAO();
-         
-         if(dao.salvar(produto)){
-             response.sendRedirect(request.getContextPath() + "/pages/dashboard.html");
-         }else{
-             response.sendRedirect(request.getContextPath() + "/pages/cadastroProdutos.html");
-         }
+
+        String prateleira = request.getParameter("prateleira");
+        produto.setPrateleira(prateleira != null ? prateleira : "");
+
+        String qtdMinimaParam = request.getParameter("qtdMinima");
+        produto.setQtdMinima(qtdMinimaParam != null && !qtdMinimaParam.isBlank()
+                ? Integer.parseInt(qtdMinimaParam)
+                : 0);
+
+        CadastroProdutoDAO dao = new CadastroProdutoDAO();
+
+        if (dao.salvar(produto)) {
+            response.sendRedirect(request.getContextPath() + "/pages/dashboard.html");
+        } else {
+            response.sendRedirect(request.getContextPath() + "/pages/cadastroProdutos.html");
+        }
     }
 }

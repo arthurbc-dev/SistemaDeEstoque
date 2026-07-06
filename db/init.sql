@@ -47,3 +47,5 @@ CREATE TABLE IF NOT EXISTS produtos (
     total            DECIMAL(10,2),
     status           VARCHAR(100)
 );
+ALTER TABLE produtos ADD COLUMN prateleira VARCHAR(100);
+ALTER TABLE produtos ADD COLUMN qtd_minima INT DEFAULT 0;

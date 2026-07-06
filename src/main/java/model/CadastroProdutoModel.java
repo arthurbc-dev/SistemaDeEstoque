@@ -1,7 +1,7 @@
 package model;
 
-public class CadastroProdutoModel {
-    
+public class    CadastroProdutoModel {
+
     private int id;
     private String codigoBarras;
     private String nomeProduto;
@@ -13,6 +13,24 @@ public class CadastroProdutoModel {
     private String valor;
     private String total;
     private String status;
+    private String prateleira;
+    private int qtdMinima;
+
+    public int getQtdMinima() {
+        return qtdMinima;
+    }
+
+    public void setQtdMinima(int qtdMinima) {
+        this.qtdMinima = qtdMinima;
+    }
+
+    public String getPrateleira() {
+        return prateleira;
+    }
+
+    public void setPrateleira(String prateleira) {
+        this.prateleira = prateleira;
+    }
 
     public String getCodigoBarras() {
         return codigoBarras;

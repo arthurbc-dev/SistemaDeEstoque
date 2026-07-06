@@ -13,8 +13,8 @@ public class CadastroProdutoDAO {
 
     public boolean salvar(CadastroProdutoModel produto) {
         String sql = "INSERT INTO produtos " +
-                "(codigo_barras,nome_produto,fabricante,marca,data_fabricacao,data_vencimento,quantidade,valor,total,status) " +
-                "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+                "(codigo_barras,nome_produto,fabricante,marca,data_fabricacao,data_vencimento,quantidade,valor,total,status,prateleira,qtd_minima) " +
+                "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         try (Connection con = ConnectionFactory.getConnection();
              PreparedStatement stmt = con.prepareStatement(sql)) {
             stmt.setString(1, produto.getCodigoBarras());
@@ -27,6 +27,8 @@ public class CadastroProdutoDAO {
             stmt.setString(8, produto.getValor());
             stmt.setString(9, produto.getTotal());
             stmt.setString(10, produto.getStatus());
+            stmt.setString(11, produto.getPrateleira());
+            stmt.setInt(12, produto.getQtdMinima());
             stmt.executeUpdate();
             return true;
         } catch (SQLException e) {
