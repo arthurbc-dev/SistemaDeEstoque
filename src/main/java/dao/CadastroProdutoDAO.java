@@ -74,6 +74,46 @@ public class CadastroProdutoDAO {
 
         return null;
     }
+    public CadastroProdutoModel buscarPorCodigoEValidade(String codigoBarras, String dataVencimento) {
+        String sql = "SELECT id, codigo_barras, nome_produto, fabricante, marca, " +
+                "data_fabricacao, data_vencimento, quantidade, valor, total, status, " +
+                "prateleira, qtd_minima FROM produtos " +
+                "WHERE codigo_barras = ? AND data_vencimento = ? LIMIT 1";
+
+        try (Connection conn = ConnectionFactory.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setString(1, codigoBarras);
+            stmt.setString(2, dataVencimento);
+
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    CadastroProdutoModel p = new CadastroProdutoModel();
+
+                    p.setId(rs.getInt("id"));
+                    p.setCodigoBarras(rs.getString("codigo_barras"));
+                    p.setNomeProduto(rs.getString("nome_produto"));
+                    p.setFabricante(rs.getString("fabricante"));
+                    p.setMarca(rs.getString("marca"));
+                    p.setDataFabricacao(rs.getString("data_fabricacao"));
+                    p.setDataVencimento(rs.getString("data_vencimento"));
+                    p.setQuantidade(rs.getLong("quantidade"));
+                    p.setValor(rs.getString("valor"));
+                    p.setTotal(rs.getString("total"));
+                    p.setStatus(rs.getString("status"));
+                    p.setPrateleira(rs.getString("prateleira"));
+                    p.setQtdMinima(rs.getInt("qtd_minima"));
+
+                    return p;
+                }
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
     public CadastroProdutoModel buscarPorId(int id) {
         String sql = "SELECT id, codigo_barras, nome_produto, fabricante, marca, " +
                 "data_fabricacao, data_vencimento, quantidade, valor, total, status, " +

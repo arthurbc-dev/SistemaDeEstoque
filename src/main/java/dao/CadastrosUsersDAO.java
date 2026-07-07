@@ -2,12 +2,18 @@ package dao;
 
 import connection.ConnectionFactory;
 import java.sql.PreparedStatement;
+import java.sql.Types;
 import model.CadastroUsuarioModel;
 import util.SenhaUtil;
 
 public class CadastrosUsersDAO {
 
     public boolean cadastrar(CadastroUsuarioModel user) {
+        if (user.getNomeUsuario() == null || user.getNomeUsuario().isBlank()
+                || user.getSenha() == null || user.getSenha().isBlank()) {
+            return false;
+        }
+
         // CORRIGIDO: VALUE -> VALUES
         String sql = "INSERT INTO users " +
 "(username, psw, nameFirst, sobrenome, matricula, cpf, sexo, dtaNascimento, email, telefone, funcao, cep, endereco, numero, bairro, cidade, estado, complemento) " +
@@ -23,7 +29,11 @@ public class CadastrosUsersDAO {
             stmt.setString(5, user.getMatricula());
             stmt.setString(6, user.getCpf());
             stmt.setString(7, user.getSexo());
-            stmt.setString(8, user.getDtaNascimento());
+            if (user.getDtaNascimento() == null || user.getDtaNascimento().isBlank()) {
+                stmt.setNull(8, Types.DATE);
+            } else {
+                stmt.setString(8, user.getDtaNascimento());
+            }
             stmt.setString(9, user.getEmail());
             stmt.setString(10, user.getTelefone());
             stmt.setString(11, user.getFuncao());

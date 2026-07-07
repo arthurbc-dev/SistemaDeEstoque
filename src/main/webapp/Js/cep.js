@@ -1,5 +1,7 @@
 document.addEventListener("DOMContentLoaded", function () {
     const campoCep = document.getElementById("cep");
+    const campoCpf = document.getElementById("cpf");
+    const campoTelefone = document.getElementById("telefone");
 
     campoCep.addEventListener("blur", buscarCep);
 
@@ -19,6 +21,34 @@ document.addEventListener("DOMContentLoaded", function () {
 
         this.value = valor;
     });
+
+    if (campoCpf) {
+        campoCpf.addEventListener("input", function () {
+            let valor = this.value.replace(/\D/g, "").substring(0, 11);
+
+            valor = valor.replace(/(\d{3})(\d)/, "$1.$2");
+            valor = valor.replace(/(\d{3})(\d)/, "$1.$2");
+            valor = valor.replace(/(\d{3})(\d{1,2})$/, "$1-$2");
+
+            this.value = valor;
+        });
+    }
+
+    if (campoTelefone) {
+        campoTelefone.addEventListener("input", function () {
+            let valor = this.value.replace(/\D/g, "").substring(0, 11);
+
+            if (valor.length <= 10) {
+                valor = valor.replace(/(\d{2})(\d)/, "($1) $2");
+                valor = valor.replace(/(\d{4})(\d)/, "$1-$2");
+            } else {
+                valor = valor.replace(/(\d{2})(\d)/, "($1) $2");
+                valor = valor.replace(/(\d{5})(\d)/, "$1-$2");
+            }
+
+            this.value = valor;
+        });
+    }
 });
 
 async function buscarCep() {

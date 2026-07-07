@@ -56,8 +56,10 @@ public class CadastroProdutosController extends HttpServlet {
             usuario = session.getAttribute("usuario").toString();
         }
 
-        CadastroProdutoModel produtoExistente = dao.buscarPorCodigoBarras(produto.getCodigoBarras());
-
+        CadastroProdutoModel produtoExistente = dao.buscarPorCodigoEValidade(
+                produto.getCodigoBarras(),
+                produto.getDataVencimento()
+        );
         boolean sucesso = false;
 
         if (produtoExistente != null) {

@@ -63,4 +63,4 @@ CREATE TABLE IF NOT EXISTS historico (
      FOREIGN KEY (produto_id) REFERENCES produtos(id)
          ON DELETE CASCADE
 );
-ALTER TABLE produtos ADD CONSTRAINT uk_codigo_barras UNIQUE (codigo_barras);
+ALTER TABLE produtos ADD CONSTRAINT uk_codigo_validade UNIQUE (codigo_barras, data_vencimento);

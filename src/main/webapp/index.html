@@ -2,31 +2,32 @@
 <html>
     <head>
         <link rel="stylesheet" href="css/reset.css"/>
-        <link rel="stylesheet" href="css/color.css"/> 
+        <link rel="stylesheet" href="css/color.css"/>
         <link rel="stylesheet" href="css/Login.css"/>
         <title>Sistema de Estoque</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
     </head>
     <body>
-        <!-- CORRIGIDO: form dentro de <main> para o CSS de centralização funcionar -->
         <main>
-            <form action="login" method="post">
+            <form action="login" method="post" class="login-card">
                 <h1>Login</h1>
 
-                <div>
-                    <label for="users">Usuário</label>
-                    <input type="text" id="users" name="users" class="inputUser"/>
+                <div class="campo-login">
+                    <label for="users">Usuario</label>
+                    <input type="text" id="users" name="users" class="inputUser" required/>
                 </div>
 
-                <div>
+                <div class="campo-login">
                     <label for="passw">Senha</label>
-                    <input type="password" id="passw" name="passw" class="inputPassword"/>
+                    <input type="password" id="passw" name="passw" class="inputPassword" required/>
                 </div>
+
                 <button type="submit">Entrar</button>
-                <div>
-                    <p>Não possui cadastro?</p><a href="/pages/cadastro.html">cadastre-se</a>
-                    
+
+                <div class="cadastro-link">
+                    <span>Nao possui cadastro?</span>
+                    <a href="pages/cadastro.html">Cadastre-se</a>
                 </div>
             </form>
         </main>
