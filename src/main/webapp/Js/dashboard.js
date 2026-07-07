@@ -23,7 +23,12 @@ async function carregarEstoque() {
                 <td>${item.quantidade ?? ""}</td>
                 <td>${item.valor ?? ""}</td>
                 <td>${item.total ?? ""}</td>
-                <td>${item.status ?? ""}</td>
+                <td>
+                    <span>${item.status ?? ""}</span>
+                    <button type="button" class="btn-historico" data-produto-id="${item.id}">
+                        Historico
+                    </button>
+                </td>
             </tr>`;
         });
     } catch (erro) {
@@ -44,6 +49,65 @@ async function carregarResumo() {
         console.error("Erro ao carregar o resumo:", erro);
     }
 }
+
+async function abrirHistorico(produtoId, nomeProduto) {
+    const painel = document.getElementById("painelHistorico");
+    const titulo = document.getElementById("tituloHistorico");
+    const conteudo = document.getElementById("conteudoHistorico");
+
+    titulo.textContent = `Historico - ${nomeProduto}`;
+    conteudo.innerHTML = "<p class='msg-historico'>Carregando...</p>";
+    painel.classList.add("aberto");
+
+    try {
+        const response = await fetch(`/api/historico?produtoId=${produtoId}`);
+
+        if (!response.ok) {
+            conteudo.innerHTML = "<p class='msg-historico'>Erro ao carregar historico.</p>";
+            return;
+        }
+
+        const historico = await response.json();
+
+        if (historico.length === 0) {
+            conteudo.innerHTML = "<p class='msg-historico'>Nenhuma movimentacao encontrada.</p>";
+            return;
+        }
+
+        conteudo.innerHTML = historico.map(item => `
+            <div class="item-historico">
+                <div class="item-historico-topo">
+                    <strong class="${item.tipo === "entrada" ? "tipo-entrada" : "tipo-saida"}">${item.tipo}</strong>
+                    <span>${item.dataHora ?? ""}</span>
+                </div>
+                <p>Quantidade: ${item.quantidade ?? 0}</p>
+                <p>Usuario: ${item.usuario ?? ""}</p>
+            </div>
+        `).join("");
+
+    } catch (erro) {
+        console.error("Erro ao carregar historico:", erro);
+        conteudo.innerHTML = "<p class='msg-historico'>Erro ao carregar historico.</p>";
+    }
+}
+
+function fecharHistorico() {
+    document.getElementById("painelHistorico").classList.remove("aberto");
+}
+
+document.addEventListener("click", function (event) {
+    const botao = event.target.closest(".btn-historico");
+    if (botao) {
+        const linha = botao.closest("tr");
+        const nomeProduto = linha ? linha.children[1].textContent : "Produto";
+        abrirHistorico(botao.dataset.produtoId, nomeProduto);
+        return;
+    }
+
+    if (event.target.id === "btnFecharHistorico") {
+        fecharHistorico();
+    }
+});
 
 window.onload = () => {
     carregarEstoque();

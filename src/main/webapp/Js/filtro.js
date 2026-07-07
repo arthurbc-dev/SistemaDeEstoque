@@ -31,7 +31,12 @@ async function filtroEstoque() {
                 <td>${item.quantidade ?? ""}</td>
                 <td>${parseFloat(item.valor || 0).toFixed(2)}</td>
                 <td>${parseFloat(item.total || 0).toFixed(2)}</td>
-                <td>${item.status ?? ""}</td>
+                <td>
+                    <span>${item.status ?? ""}</span>
+                    <button type="button" class="btn-historico" data-produto-id="${item.id}">
+                        Historico
+                    </button>
+                </td>
             </tr>`;
         });
     } catch (erro) {

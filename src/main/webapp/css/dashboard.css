@@ -309,6 +309,103 @@ main {
     background-color: var(--hover-bg);
 }
 
+.btn-historico {
+    margin-left: 8px;
+    padding: 6px 12px;
+    background: rgba(37, 99, 235, 0.16);
+    color: #93c5fd;
+    border: 1px solid rgba(37, 99, 235, 0.35);
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.btn-historico:hover {
+    background: rgba(37, 99, 235, 0.26);
+}
+
+.painel-historico {
+    position: fixed;
+    top: 0;
+    right: -380px;
+    width: 360px;
+    height: 100vh;
+    background: var(--card-bg);
+    border-left: 1px solid var(--border-color);
+    box-shadow: -8px 0 24px rgba(0, 0, 0, 0.35);
+    z-index: 1000;
+    transition: right 0.25s ease;
+    display: flex;
+    flex-direction: column;
+}
+
+.painel-historico.aberto {
+    right: 0;
+}
+
+.painel-historico-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 18px;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.painel-historico-header h2 {
+    color: #ffffff;
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.btn-fechar-historico {
+    background: transparent;
+    border: none;
+    color: var(--gray-medium);
+    cursor: pointer;
+    font-size: 24px;
+    line-height: 1;
+}
+
+.painel-historico-conteudo {
+    padding: 16px;
+    overflow-y: auto;
+}
+
+.item-historico {
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 12px;
+    margin-bottom: 10px;
+    background: rgba(255, 255, 255, 0.04);
+    color: #e2e8f0;
+}
+
+.item-historico-topo {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    margin-bottom: 8px;
+    font-size: 12px;
+}
+
+.item-historico p,
+.msg-historico {
+    color: #cbd5e1;
+    font-size: 13px;
+    margin: 4px 0;
+}
+
+.tipo-entrada {
+    color: #60a5fa;
+    text-transform: uppercase;
+}
+
+.tipo-saida {
+    color: #f87171;
+    text-transform: uppercase;
+}
+
 
 /* PAGINAÇÃO */
 

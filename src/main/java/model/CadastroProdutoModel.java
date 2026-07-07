@@ -24,6 +24,14 @@ public class    CadastroProdutoModel {
         this.qtdMinima = qtdMinima;
     }
 
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
     public String getPrateleira() {
         return prateleira;
     }

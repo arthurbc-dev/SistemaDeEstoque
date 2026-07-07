@@ -34,6 +34,7 @@ INSERT INTO users (
     '40000-000', 'Rua Exemplo', '123', 'Centro', 'Salvador', 'BA', 'N/A'
 );
 
+
 CREATE TABLE IF NOT EXISTS produtos (
     id               INT AUTO_INCREMENT PRIMARY KEY,
     codigo_barras    VARCHAR(100) NOT NULL,
@@ -49,3 +50,17 @@ CREATE TABLE IF NOT EXISTS produtos (
 );
 ALTER TABLE produtos ADD COLUMN prateleira VARCHAR(100);
 ALTER TABLE produtos ADD COLUMN qtd_minima INT DEFAULT 0;
+CREATE TABLE IF NOT EXISTS historico (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    produto_id INT NOT NULL,
+    nome_produto VARCHAR(255) NOT NULL,
+    quantidade BIGINT NOT NULL,
+    tipo VARCHAR(20) NOT NULL,
+    usuario VARCHAR(50) NOT NULL,
+    data_hora TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+
+    CONSTRAINT fk_historico_produto
+     FOREIGN KEY (produto_id) REFERENCES produtos(id)
+         ON DELETE CASCADE
+);
+ALTER TABLE produtos ADD CONSTRAINT uk_codigo_barras UNIQUE (codigo_barras);

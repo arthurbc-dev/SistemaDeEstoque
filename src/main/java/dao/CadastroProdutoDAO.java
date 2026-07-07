@@ -36,6 +36,120 @@ public class CadastroProdutoDAO {
             return false;
         }
     }
+    public CadastroProdutoModel buscarPorCodigoBarras(String codigoBarras) {
+        String sql = "SELECT id, codigo_barras, nome_produto, fabricante, marca, " +
+                "data_fabricacao, data_vencimento, quantidade, valor, total, status, " +
+                "prateleira, qtd_minima FROM produtos WHERE codigo_barras = ? LIMIT 1";
+
+        try (Connection conn = ConnectionFactory.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setString(1, codigoBarras);
+
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    CadastroProdutoModel p = new CadastroProdutoModel();
+
+                    p.setId(rs.getInt("id"));
+                    p.setCodigoBarras(rs.getString("codigo_barras"));
+                    p.setNomeProduto(rs.getString("nome_produto"));
+                    p.setFabricante(rs.getString("fabricante"));
+                    p.setMarca(rs.getString("marca"));
+                    p.setDataFabricacao(rs.getString("data_fabricacao"));
+                    p.setDataVencimento(rs.getString("data_vencimento"));
+                    p.setQuantidade(rs.getLong("quantidade"));
+                    p.setValor(rs.getString("valor"));
+                    p.setTotal(rs.getString("total"));
+                    p.setStatus(rs.getString("status"));
+                    p.setPrateleira(rs.getString("prateleira"));
+                    p.setQtdMinima(rs.getInt("qtd_minima"));
+
+                    return p;
+                }
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+    public CadastroProdutoModel buscarPorId(int id) {
+        String sql = "SELECT id, codigo_barras, nome_produto, fabricante, marca, " +
+                "data_fabricacao, data_vencimento, quantidade, valor, total, status, " +
+                "prateleira, qtd_minima FROM produtos WHERE id = ?";
+
+        try (Connection conn = ConnectionFactory.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setInt(1, id);
+
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    CadastroProdutoModel p = new CadastroProdutoModel();
+
+                    p.setId(rs.getInt("id"));
+                    p.setCodigoBarras(rs.getString("codigo_barras"));
+                    p.setNomeProduto(rs.getString("nome_produto"));
+                    p.setFabricante(rs.getString("fabricante"));
+                    p.setMarca(rs.getString("marca"));
+                    p.setDataFabricacao(rs.getString("data_fabricacao"));
+                    p.setDataVencimento(rs.getString("data_vencimento"));
+                    p.setQuantidade(rs.getLong("quantidade"));
+                    p.setValor(rs.getString("valor"));
+                    p.setTotal(rs.getString("total"));
+                    p.setStatus(rs.getString("status"));
+                    p.setPrateleira(rs.getString("prateleira"));
+                    p.setQtdMinima(rs.getInt("qtd_minima"));
+
+                    return p;
+                }
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+    public boolean atualizarQuantidadeProduto(int idProduto, long quantidadeMovimentada, String tipo) {
+        CadastroProdutoModel produto = buscarPorId(idProduto);
+
+        if (produto == null) {
+            return false;
+        }
+
+        long quantidadeAtual = produto.getQuantidade();
+        long novaQuantidade;
+
+        if ("entrada".equalsIgnoreCase(tipo)) {
+            novaQuantidade = quantidadeAtual + quantidadeMovimentada;
+        } else if ("saida".equalsIgnoreCase(tipo)) {
+            novaQuantidade = quantidadeAtual - quantidadeMovimentada;
+
+            if (novaQuantidade < 0) {
+                return false;
+            }
+        } else {
+            return false;
+        }
+
+        String sql = "UPDATE produtos SET quantidade = ?, status = ? WHERE id = ?";
+
+        try (Connection conn = ConnectionFactory.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setLong(1, novaQuantidade);
+            stmt.setString(2, tipo);
+            stmt.setInt(3, idProduto);
+
+            return stmt.executeUpdate() > 0;
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
 
     public List<CadastroProdutoModel> listarComFiltro(String nome, String tipo, String data) {
         List<CadastroProdutoModel> lista = new ArrayList<>();
@@ -68,6 +182,7 @@ public class CadastroProdutoDAO {
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
                 CadastroProdutoModel p = new CadastroProdutoModel();
+                p.setId(rs.getInt("id"));
                 p.setCodigoBarras(rs.getString("codigo_barras"));
                 p.setNomeProduto(rs.getString("nome_produto"));
                 p.setFabricante(rs.getString("fabricante"));
