@@ -40,6 +40,11 @@ public class CadastroController extends HttpServlet {
 
         CadastrosUsersDAO dao = new CadastrosUsersDAO();
 
+        if (dao.usuarioExiste(user.getNomeUsuario())) {
+            response.sendRedirect(request.getContextPath() + "/pages/cadastro.html?erro=usuario");
+            return;
+        }
+
         if (dao.cadastrar(user)) {
             response.sendRedirect(request.getContextPath() + "/index.html?cadastro=sucesso");
         } else {

@@ -15,6 +15,7 @@
             <ul>
                 <li><a href="dashboard.html">Início</a></li>
                 <li><a href="GerenciarProdutos.html">Gerenciamento</a></li>
+                <li><a href="cadastroProdutos.html" class="btn-menu">Cadastro</a></li>
                 <li><a href="#" id="btnlogout">Sair</a></li>
             </ul>
         </nav>
@@ -22,6 +23,7 @@
     <main>
         <section id="form-container">
             <form action="../cadastroProdutos" method="post" id="FormCadastro">
+                <p id="mensagemErroProduto" class="mensagem-erro"></p>
                 <div class="linhas-form">
                     <label>Código de Barras</label>
                     <input type="text" name="codigoBarras" required />
@@ -57,24 +59,24 @@
                 <div class="linha-form">
                     <div class="grupo-form full">
                         <label>Total</label>
-                        <input type="number" step="0.01" name="total" required />
+                        <input type="text" name="total" readonly tabindex="-1" />
                     </div>
                 </div>
                 <div class="linhas-form">
                     <label>Tipo de Movimentação</label>
-                        <select name="status" required>
+                    <select name="status" required>
                         <option value="" disabled selected>Selecione</option>
                         <option value="entrada">Entrada</option>
                         <option value="saida">Saída</option>
                     </select>
-                    <div class="linhas-form">
-                        <label>Prateleira / Local</label>
-                        <input type="text" name="prateleira" placeholder="Ex: A1, Corredor 3" />
-                    </div>
-                    <div class="linhas-form">
-                        <label>Quantidade Mínima</label>
-                        <input type="number" name="qtdMinima" min="0" placeholder="Ex: 10" />
-                    </div>
+                </div>
+                <div class="linhas-form">
+                    <label>Prateleira / Local</label>
+                    <input type="text" name="prateleira" placeholder="Ex: A1, Corredor 3" />
+                </div>
+                <div class="linhas-form">
+                    <label>Quantidade Mínima</label>
+                    <input type="number" name="qtdMinima" min="0" placeholder="Ex: 10" />
                 </div>
                 <div class="acoes-form">
                     <button type="submit" class="btn-salvar">Salvar</button>

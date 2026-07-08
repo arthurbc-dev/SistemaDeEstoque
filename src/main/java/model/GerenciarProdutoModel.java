@@ -11,6 +11,15 @@ public class GerenciarProdutoModel {
     private long quantidade;
     private String valor;
     private String total;
+    private long quantidadeTotalCodigo;
+
+    public long getQuantidadeTotalCodigo() {
+        return quantidadeTotalCodigo;
+    }
+
+    public void setQuantidadeTotalCodigo(long quantidadeTotalCodigo) {
+        this.quantidadeTotalCodigo = quantidadeTotalCodigo;
+    }
 
     public int getId() {
         return id;

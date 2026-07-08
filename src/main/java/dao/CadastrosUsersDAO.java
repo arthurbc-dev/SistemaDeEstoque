@@ -8,6 +8,27 @@ import util.SenhaUtil;
 
 public class CadastrosUsersDAO {
 
+    public boolean usuarioExiste(String username) {
+        if (username == null || username.isBlank()) {
+            return false;
+        }
+
+        String sql = "SELECT id FROM users WHERE username = ? LIMIT 1";
+
+        try (var con = ConnectionFactory.getConnection();
+             PreparedStatement stmt = con.prepareStatement(sql)) {
+
+            stmt.setString(1, username);
+
+            try (var rs = stmt.executeQuery()) {
+                return rs.next();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return true;
+        }
+    }
+
     public boolean cadastrar(CadastroUsuarioModel user) {
         if (user.getNomeUsuario() == null || user.getNomeUsuario().isBlank()
                 || user.getSenha() == null || user.getSenha().isBlank()) {

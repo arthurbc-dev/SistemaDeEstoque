@@ -5,7 +5,7 @@ async function validarLogin() {
 
         if (!dado.perfil || dado.perfil.toLowerCase() !== "admin") {
             const btnCadastro = document.querySelector(".btn-menu");
-            if (btnCadastro) btnCadastro.style.display = "none";
+            if (btnCadastro) btnCadastro.classList.add("is-hidden");
         }
     } catch (e) {
         console.error("Erro ao verificar o perfil", e);

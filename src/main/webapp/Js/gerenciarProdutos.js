@@ -14,6 +14,10 @@ async function carregarProdutos() {
     }
 }
 
+function produtoPrecisaReposicao(produto) {
+    return produto.qtdMinima > 0 && produto.quantidadeTotalCodigo <= produto.qtdMinima;
+}
+
 function renderizarTabela(produtos) {
     const corpo = document.getElementById("corpoTabela");
 
@@ -23,7 +27,7 @@ function renderizarTabela(produtos) {
     }
 
     corpo.innerHTML = produtos.map(p => {
-        const precisaRepor = p.qtdMinima > 0 && p.quantidade <= p.qtdMinima;
+        const precisaRepor = produtoPrecisaReposicao(p);
         const badgeReposicao = precisaRepor
             ? `<span class="badge-reposicao badge-repor">⚠ Repor</span>`
             : `<span class="badge-reposicao badge-ok">✓ OK</span>`;
@@ -34,9 +38,9 @@ function renderizarTabela(produtos) {
 
         const prateleira = p.prateleira
             ? `<span class="prateleira-badge">${p.prateleira}</span>`
-            : `<span style="color:#475569">—</span>`;
+            : `<span class="texto-ausente">—</span>`;
 
-        const qtdMinima = p.qtdMinima > 0 ? p.qtdMinima : `<span style="color:#475569">—</span>`;
+        const qtdMinima = p.qtdMinima > 0 ? p.qtdMinima : `<span class="texto-ausente">—</span>`;
 
         return `<tr>
             <td>${p.codigoBarras ?? "—"}</td>
@@ -51,8 +55,8 @@ function renderizarTabela(produtos) {
             <td>${badgeStatus}</td>
             <td>${badgeReposicao}</td>
             <td>
-                <button class="btn-editar" onclick="abrirModalEdicao(${p.id})">Editar</button>
-                <button class="btn-excluir" onclick="abrirModalExclusao(${p.id}, '${(p.nomeProduto ?? "").replace(/'/g, "\\'")}')">Excluir</button>
+                <button class="btn-editar" data-produto-id="${p.id}">Editar</button>
+                <button class="btn-excluir" data-produto-id="${p.id}" data-produto-nome="${p.nomeProduto ?? ""}">Excluir</button>
             </td>
         </tr>`;
     }).join("");
@@ -62,18 +66,18 @@ function renderizarAlertas(produtos) {
     const secao = document.getElementById("alertas-reposicao");
     const lista = document.getElementById("listaAlertas");
 
-    const precisamRepor = produtos.filter(p => p.qtdMinima > 0 && p.quantidade <= p.qtdMinima);
+    const precisamRepor = produtos.filter(p => produtoPrecisaReposicao(p));
 
     if (precisamRepor.length === 0) {
-        secao.style.display = "none";
+        secao.classList.add("is-hidden");
         return;
     }
 
-    secao.style.display = "block";
+    secao.classList.remove("is-hidden");
     lista.innerHTML = precisamRepor.map(p => `
         <div class="card-alerta">
             <div class="card-alerta-nome">${p.nomeProduto}</div>
-            <div class="card-alerta-info">Estoque: ${p.quantidade} | Mínimo: ${p.qtdMinima}</div>
+            <div class="card-alerta-info">Estoque: ${p.quantidadeTotalCodigo} | Mínimo: ${p.qtdMinima}</div>
             <div class="card-alerta-prateleira">${p.prateleira ? "📍 " + p.prateleira : "Sem localização definida"}</div>
         </div>
     `).join("");
@@ -91,7 +95,7 @@ function filtrar() {
 
         const matchStatus = !status || p.status === status;
 
-        const precisaRepor = p.qtdMinima > 0 && p.quantidade <= p.qtdMinima;
+        const precisaRepor = produtoPrecisaReposicao(p);
         const matchReposicao = !reposicao
             || (reposicao === "sim" && precisaRepor)
             || (reposicao === "nao" && !precisaRepor);
@@ -102,7 +106,6 @@ function filtrar() {
     renderizarTabela(filtrados);
 }
 
-// ---- MODAL EDIÇÃO ----
 
 function abrirModalEdicao(id) {
     const p = todosProdutos.find(x => x.id === id);
@@ -125,11 +128,11 @@ function abrirModalEdicao(id) {
     const val = parseFloat(p.valor) || 0;
     document.getElementById("editTotal").value = p.total ?? (qtd * val).toFixed(2);
 
-    document.getElementById("modalOverlay").style.display = "flex";
+    document.getElementById("modalOverlay").classList.remove("is-hidden");
 }
 
 function fecharModalEdicao() {
-    document.getElementById("modalOverlay").style.display = "none";
+    document.getElementById("modalOverlay").classList.add("is-hidden");
 }
 
 function calcularTotal() {
@@ -175,17 +178,15 @@ async function salvarEdicao() {
     }
 }
 
-// ---- MODAL EXCLUSÃO ----
-
 function abrirModalExclusao(id, nome) {
     idParaExcluir = id;
     document.getElementById("nomeProdutoExclusao").textContent = nome;
-    document.getElementById("modalExclusaoOverlay").style.display = "flex";
+    document.getElementById("modalExclusaoOverlay").classList.remove("is-hidden");
 }
 
 function fecharModalExclusao() {
     idParaExcluir = null;
-    document.getElementById("modalExclusaoOverlay").style.display = "none";
+    document.getElementById("modalExclusaoOverlay").classList.add("is-hidden");
 }
 
 async function confirmarExclusao() {
@@ -207,7 +208,6 @@ async function confirmarExclusao() {
     }
 }
 
-// ---- EVENTOS ----
 
 document.getElementById("editQuantidade").addEventListener("input", calcularTotal);
 document.getElementById("editValor").addEventListener("input", calcularTotal);
@@ -219,6 +219,19 @@ document.getElementById("btnSalvarEdicao").addEventListener("click", salvarEdica
 document.getElementById("btnFecharExclusao").addEventListener("click", fecharModalExclusao);
 document.getElementById("btnCancelarExclusao").addEventListener("click", fecharModalExclusao);
 document.getElementById("btnConfirmarExclusao").addEventListener("click", confirmarExclusao);
+
+document.getElementById("corpoTabela").addEventListener("click", e => {
+    const btnEditar = e.target.closest(".btn-editar");
+    if (btnEditar) {
+        abrirModalEdicao(parseInt(btnEditar.dataset.produtoId));
+        return;
+    }
+
+    const btnExcluir = e.target.closest(".btn-excluir");
+    if (btnExcluir) {
+        abrirModalExclusao(parseInt(btnExcluir.dataset.produtoId), btnExcluir.dataset.produtoNome);
+    }
+});
 
 document.getElementById("modalOverlay").addEventListener("click", e => {
     if (e.target === document.getElementById("modalOverlay")) fecharModalEdicao();

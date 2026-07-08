@@ -174,14 +174,25 @@ public class CadastroProdutoDAO {
             return false;
         }
 
-        String sql = "UPDATE produtos SET quantidade = ?, status = ? WHERE id = ?";
+        String sql = "UPDATE produtos SET quantidade = ?, total = ?, status = ? WHERE id = ?";
+
+        double valorUnitario = 0;
+
+        try {
+            valorUnitario = Double.parseDouble(produto.getValor());
+        } catch (NumberFormatException e) {
+            valorUnitario = 0;
+        }
+
+        double total = novaQuantidade * valorUnitario;
 
         try (Connection conn = ConnectionFactory.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
 
             stmt.setLong(1, novaQuantidade);
-            stmt.setString(2, tipo);
-            stmt.setInt(3, idProduto);
+            stmt.setDouble(2, total);
+            stmt.setString(3, tipo);
+            stmt.setInt(4, idProduto);
 
             return stmt.executeUpdate() > 0;
 

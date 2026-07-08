@@ -333,3 +333,7 @@
     color: var(--gray-medium);
     font-size: 14px;
 }
+
+.texto-ausente {
+    color: #475569;
+}

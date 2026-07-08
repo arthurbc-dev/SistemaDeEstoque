@@ -60,6 +60,7 @@ public class CadastroProdutosController extends HttpServlet {
                 produto.getCodigoBarras(),
                 produto.getDataVencimento()
         );
+        String erro = "cadastro";
         boolean sucesso = false;
 
         if (produtoExistente != null) {
@@ -68,6 +69,9 @@ public class CadastroProdutosController extends HttpServlet {
                     produto.getQuantidade(),
                     produto.getStatus()
             );
+            if (!sucesso && "saida".equalsIgnoreCase(produto.getStatus())) {
+                erro = "estoque";
+            }
 
             if (sucesso) {
                 historicoDAO.registrar(
@@ -86,7 +90,10 @@ public class CadastroProdutosController extends HttpServlet {
                 sucesso = dao.salvar(produto);
 
                 if (sucesso) {
-                    CadastroProdutoModel produtoSalvo = dao.buscarPorCodigoBarras(produto.getCodigoBarras());
+                    CadastroProdutoModel produtoSalvo = dao.buscarPorCodigoEValidade(
+                            produto.getCodigoBarras(),
+                            produto.getDataVencimento()
+                    );
 
                     if (produtoSalvo != null) {
                         historicoDAO.registrar(
@@ -100,11 +107,10 @@ public class CadastroProdutosController extends HttpServlet {
                 }
             }
         }
-
         if (sucesso) {
             response.sendRedirect(request.getContextPath() + "/pages/dashboard.html");
         } else {
-            response.sendRedirect(request.getContextPath() + "/pages/cadastroProdutos.html");
+            response.sendRedirect(request.getContextPath() + "/pages/cadastroProdutos.html?erro=" + erro);
         }
     }
 }

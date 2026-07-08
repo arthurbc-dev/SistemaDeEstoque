@@ -22,26 +22,26 @@ public class ResumoEstoqueController extends HttpServlet {
 
         String sql = """
                 SELECT
-                    SUM(CASE WHEN status = 'entrada' THEN quantidade ELSE 0 END) AS entrada,
-                    SUM(CASE WHEN status = 'saida' THEN quantidade ELSE 0 END) AS saida
-                FROM produtos
+                    COALESCE((SELECT SUM(quantidade) FROM historico WHERE tipo = 'entrada'), 0) AS entrada,
+                    COALESCE((SELECT SUM(quantidade) FROM historico WHERE tipo = 'saida'), 0) AS saida,
+                    COALESCE((SELECT SUM(quantidade) FROM produtos), 0) AS total
                 """;
 
         try (Connection conn = ConnectionFactory.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql);
              ResultSet rs = stmt.executeQuery()) {
 
-            int entrada = 0;
-            int saida = 0;
+            long entrada = 0;
+            long saida = 0;
+            long total = 0;
 
             if (rs.next()) {
-                entrada = rs.getInt("entrada");
-                saida = rs.getInt("saida");
+                entrada = rs.getLong("entrada");
+                saida = rs.getLong("saida");
+                total = rs.getLong("total");
             }
 
-            int total = entrada - saida;
-
-            Map<String, Integer> resultado = new HashMap<>();
+            Map<String, Long> resultado = new HashMap<>();
             resultado.put("entrada", entrada);
             resultado.put("saida", saida);
             resultado.put("total", total);

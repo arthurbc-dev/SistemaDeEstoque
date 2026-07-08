@@ -23,8 +23,8 @@ async function carregarEstoque() {
                 <td>${item.quantidade ?? ""}</td>
                 <td>${item.valor ?? ""}</td>
                 <td>${item.total ?? ""}</td>
+                <td>${item.status ?? ""}</td>
                 <td>
-                    <span>${item.status ?? ""}</span>
                     <button type="button" class="btn-historico" data-produto-id="${item.id}">
                         Historico
                     </button>

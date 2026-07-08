@@ -11,9 +11,11 @@ public class GerenciarProdutosDAO {
 
     public List<GerenciarProdutoModel> listarTodos() {
         List<GerenciarProdutoModel> lista = new ArrayList<>();
-        String sql = "SELECT id, codigo_barras, nome_produto, fabricante, marca, " +
-                "data_fabricacao, data_vencimento, quantidade, valor, total, status, " +
-                "prateleira, qtd_minima FROM produtos ORDER BY nome_produto";
+        String sql = "SELECT p.id, p.codigo_barras, p.nome_produto, p.fabricante, p.marca, " +
+                "p.data_fabricacao, p.data_vencimento, p.quantidade, p.valor, p.total, p.status, " +
+                "p.prateleira, p.qtd_minima, " +
+                "(SELECT SUM(p2.quantidade) FROM produtos p2 WHERE p2.codigo_barras = p.codigo_barras) AS quantidade_total_codigo " +
+                "FROM produtos p ORDER BY p.nome_produto";
 
         try (Connection conn = ConnectionFactory.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql);
@@ -34,6 +36,7 @@ public class GerenciarProdutosDAO {
                 p.setStatus(rs.getString("status"));
                 p.setPrateleira(rs.getString("prateleira"));
                 p.setQtdMinima(rs.getInt("qtd_minima"));
+                p.setQuantidadeTotalCodigo(rs.getLong("quantidade_total_codigo"));
                 lista.add(p);
             }
 

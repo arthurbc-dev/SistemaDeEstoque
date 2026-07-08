@@ -1,296 +1,198 @@
 body {
     background-color: var(--gray-light);
     color: var(--gray-dark);
-
     font-family: Arial, sans-serif;
-
     margin: 0;
 }
 
-
-/* HEADER */
-
 #header {
-    display: flex;
-
-    justify-content: space-between;
-
-    align-items: center;
-
     background-color: var(--primary-dark);
-
-    padding: 18px 32px;
-
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 24px;
+    height: 60px;
+    margin-bottom: 24px;
     box-shadow: 0 2px 10px var(--shadow-default);
-
-    margin-bottom: 30px;
 }
 
 #tituloDashboard {
-    font-size: 22px;
-
-    color: #ffffff;
-
+    font-size: 18px;
     font-weight: 600;
-
-    letter-spacing: 0.5px;
+    color: #ffffff;
+    letter-spacing: 0.3px;
 }
-
-
-/* NAV */
 
 #header nav ul {
     display: flex;
-
     align-items: center;
-
-    gap: 14px;
-
+    gap: 8px;
     list-style: none;
-
     margin: 0;
-
     padding: 0;
 }
 
-#header nav a {
+#header nav ul li a {
+    color: rgba(255, 255, 255, 0.85);
     text-decoration: none;
-
-    color: rgba(255, 255, 255, 0.8);
-
     padding: 8px 14px;
-
     border-radius: 8px;
-
+    font-size: 14px;
     transition: 0.2s;
 }
 
-#header nav a:hover {
-    background-color: rgba(255, 255, 255, 0.08);
-
+#header nav ul li a:hover,
+#header nav ul li a.btn-menu {
+    background: var(--primary-medium);
     color: #ffffff;
 }
 
-
-/* MAIN */
-
 #main {
     display: flex;
-
-    justify-content: center;
-
-    padding: 0 20px 40px;
+    flex-direction: column;
+    align-items: center;
+    padding: 0 24px 40px;
 }
 
+.mensagem-erro {
+    width: 100%;
+    max-width: 1150px;
+    margin: 0 auto 16px;
+    padding: 12px 16px;
+    border-radius: 8px;
+    background: rgba(239, 68, 68, 0.12);
+    border: 1px solid rgba(239, 68, 68, 0.35);
+    color: #fca5a5;
+    font-size: 14px;
+    font-weight: 600;
+    display: none;
+    box-sizing: border-box;
+}
 
-/* CONTAINER */
+.mensagem-erro:not(:empty) {
+    display: block;
+}
 
 .container {
-    background-color: var(--card-bg);
-
-    border: 1px solid var(--border-color);
-
-    border-radius: 18px;
-
-    box-shadow: 0 8px 24px var(--shadow-default);
-
-    padding: 35px;
-
     width: 100%;
-
     max-width: 1150px;
-
-    display: flex;
-
-    gap: 40px;
-
-    flex-wrap: wrap;
+    background-color: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 14px;
+    box-shadow: 0 4px 12px var(--shadow-default);
+    padding: 28px;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 28px;
+    box-sizing: border-box;
 }
-
-
-/* COLUNAS */
 
 .dadosPessoais,
 .containerEndereco {
-    flex: 1;
-
-    min-width: 320px;
-
+    min-width: 0;
     display: flex;
-
     flex-direction: column;
-
     gap: 10px;
 }
 
-
-/* LABELS */
-
 .container label {
     font-size: 12px;
-
     font-weight: 600;
-
     color: var(--gray-medium);
-
     text-transform: uppercase;
-
     letter-spacing: 0.5px;
 }
-
-
-/* INPUTS */
 
 .container input,
 .container select {
     width: 100%;
-
-    max-width: 320px;
-
     padding: 10px 12px;
-
     border-radius: 10px;
-
     border: 1px solid rgba(255, 255, 255, 0.08);
-
     background-color: rgba(255, 255, 255, 0.04);
-
     color: #ffffff;
-
     outline: none;
-
     font-size: 13px;
-
     transition: 0.2s;
+    box-sizing: border-box;
 }
-
-
-/* PLACEHOLDER */
 
 .container input::placeholder {
     color: rgba(255, 255, 255, 0.4);
 }
-
-
-/* HOVER */
 
 .container input:hover,
 .container select:hover {
     background-color: rgba(255, 255, 255, 0.06);
 }
 
-
-/* FOCUS */
-
 .container input:focus,
 .container select:focus {
     border-color: var(--primary-medium);
-
     background-color: rgba(255, 255, 255, 0.07);
-
-    box-shadow:
-        0 0 0 3px rgba(37, 99, 235, 0.15);
-}
-
-
-/* TAMANHOS DIFERENTES */
-
-#email,
-#endereco,
-#complemento {
-    max-width: 420px;
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
 }
 
 #numero {
-    max-width: 120px;
+    max-width: 180px;
 }
 
 #cep {
     max-width: 180px;
 }
 
-
-/* BOTÃO */
-
 .btn {
     width: 100%;
-
+    grid-column: 1 / -1;
     display: flex;
-
-    justify-content: center;
-
-    margin-top: 25px;
+    justify-content: flex-end;
+    margin-top: 4px;
 }
 
 .btn button {
     padding: 12px 30px;
-
     background-color: var(--primary-medium);
-
     color: #ffffff;
-
     border: none;
-
     border-radius: 10px;
-
     font-size: 14px;
-
     font-weight: 600;
-
     cursor: pointer;
-
     transition: 0.2s;
-
     box-shadow: 0 4px 12px rgba(37, 99, 235, 0.25);
 }
 
 .btn button:hover {
     transform: translateY(-2px);
-
     filter: brightness(1.08);
 }
 
-
-/* RESPONSIVO */
-
 @media (max-width: 768px) {
-
     #header {
         flex-direction: column;
-
+        height: auto;
+        padding: 16px;
         gap: 14px;
-
         text-align: center;
     }
 
     #header nav ul {
         flex-wrap: wrap;
-
         justify-content: center;
     }
 
     .container {
-        padding: 25px;
-
-        gap: 25px;
+        grid-template-columns: 1fr;
+        padding: 24px;
+        gap: 22px;
     }
 
-    .dadosPessoais,
-    .containerEndereco {
-        min-width: 100%;
-    }
-
-    .container input,
-    .container select,
-    #email,
-    #endereco,
-    #complemento,
     #numero,
     #cep {
         max-width: 100%;
     }
 
-    .btn button {   
+    .btn button {
         width: 100%;
     }
 }
